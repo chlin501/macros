@@ -25,9 +25,9 @@ lazy val server = project.settings (Common.settings:_*).settings (
   libraryDependencies ++= Dependencies.server
 )
 
-lazy val client = project.settings (Common.settings:_*).settings (
-  libraryDependencies ++= Dependencies.client
-)
+lazy val client = project.settings (Common.settings:_*).
+                          dependsOn(server).
+                          settings (libraryDependencies ++= Dependencies.client)
 
-lazy val root = (project in file(".")).aggregate(server, client)
+lazy val root = (project in file(".")).aggregate(client, server)
 
