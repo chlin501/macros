@@ -15,19 +15,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-name := "macros"
+import sbt._
+import Keys._
 
-version := "0.0.1"
+object Dependencies {
 
-scalaVersion := "2.12.2"
+  val common: Seq[ModuleID] = Seq (
+    "org.slf4j" % "slf4j-api" % "1.7.25",
+    "org.scalatest" %% "scalatest" % "3.0.1" % "test"
+  )
 
-lazy val server = project.settings (Common.settings:_*).settings (
-  libraryDependencies ++= Dependencies.server
-)
+  val server: Seq[ModuleID] = common ++ Seq (
+    "org.scala-lang" % "scala-reflect" % "2.12.2"
+  )
 
-lazy val client = project.settings (Common.settings:_*).settings (
-  libraryDependencies ++= Dependencies.client
-)
+  val client: Seq[ModuleID] = common
 
-lazy val root = (project in file(".")).aggregate(server, client)
+}
 

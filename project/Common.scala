@@ -15,19 +15,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-name := "macros"
+import sbt._
+import Keys._
 
-version := "0.0.1"
+object Common {
+  val settings: Seq[Def.Setting[_]] = Seq (
+    version := "0.0.1",
+    scalaVersion := "2.12.2"
 
-scalaVersion := "2.12.2"
-
-lazy val server = project.settings (Common.settings:_*).settings (
-  libraryDependencies ++= Dependencies.server
-)
-
-lazy val client = project.settings (Common.settings:_*).settings (
-  libraryDependencies ++= Dependencies.client
-)
-
-lazy val root = (project in file(".")).aggregate(server, client)
-
+  )
+}

@@ -15,19 +15,4 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-name := "macros"
-
-version := "0.0.1"
-
-scalaVersion := "2.12.2"
-
-lazy val server = project.settings (Common.settings:_*).settings (
-  libraryDependencies ++= Dependencies.server
-)
-
-lazy val client = project.settings (Common.settings:_*).settings (
-  libraryDependencies ++= Dependencies.client
-)
-
-lazy val root = (project in file(".")).aggregate(server, client)
-
+name := "client"
