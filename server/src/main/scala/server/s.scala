@@ -25,16 +25,27 @@ object s {
 
   val log = LoggerFactory.getLogger(getClass)
 
-  def execute(f: () => Unit): Unit = macro _execute
+  def execute(f: Any): Any = macro _execute
 
   def _execute(c: Context)(f: c.Tree): c.Tree = {
+    // 1. untype tree
+    val untypedTree = c.untypecheck(f)
+    log.info(s"1. untyped tree: $untypedTree")
+
     import c.universe._
-    f match {
-      case q"(..$args) => $body" => {
+
+    untypedTree match {
+      case q"(..$args) => $body" => { // 2. capture body
         log.info(s"args: $args body: $body") 
+        body match { // 3. extract statements, expression 
+          case Block(statements, expression) => 
+            log.info(s"statements: $statements expression: $expression")
+          case ub@_ => log.info(s"unknown body: $ub")
+        }
       }
       case unknown@_ => log.info(s"unknown: $unknown")
     }
+
     f
   }
 }

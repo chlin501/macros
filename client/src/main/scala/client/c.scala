@@ -27,9 +27,14 @@ object c {
 
   def main(args: Array[String]) {
 
-    execute { () => 1 + 1 }    
-
-
+    execute { () => 
+      def a(n: Int): Int = n + 1
+      val sum = 1 + 1
+      val doubled = sum * 2
+      println(s"sum: $sum") 
+      val tripled = sum * 3
+      a(sum)
+    }   
   }
 
 }
